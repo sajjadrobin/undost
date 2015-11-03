@@ -1,0 +1,54 @@
+.thumbnail {
+    margin-right: 8px;
+    padding: 4px !important;
+}
+
+.media-heading {
+    margin-bottom: 12px;
+}
+
+.copyForm {
+    margin: 1em;
+    width: 30%;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+.floatClear {
+    clear: both;
+}
+
+.donateButton {
+    padding-top: 14.5px;
+}
+
+.vcenter {
+    padding: 0 15em;
+}
+
+.rowBorder {
+    border: .1em solid;
+    border-radius: 1em;
+    padding-top: .5em;
+}
+
+@media (max-width: 600px) {
+    .copyForm {
+        margin: 0.5em;
+        width: 90%;
+    }
+
+    .floatRight {
+        float: none;
+    }
+
+    .vcenter {
+        padding: 0;
+    }
+}
