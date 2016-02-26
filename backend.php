@@ -52,8 +52,9 @@ function getFollowerList($param) {
     $url = $param['api_end_point'] . '/followers/list.json';
     $screen_name = $param['params']['screen_name'];
     $cursor = !empty($param['params']['cursor']) ? $param['params']['cursor'] : -1;
+    $count = !empty($param['params']['count']) ? $param['params']['count'] : 20;
 
-    $getfield = "?screen_name=$screen_name&cursor=$cursor&skip_status=true&include_user_entities=false";
+    $getfield = "?screen_name=$screen_name&cursor=$cursor&skip_status=true&include_user_entities=false&count=$count";
     $requestMethod = 'GET';
     $twitter = new TwitterAPIExchange($param['settings']);
     $response = $twitter->setGetfield($getfield)

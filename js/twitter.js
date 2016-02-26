@@ -24,6 +24,11 @@ jQuery(document).ready(
 			$this.addClass("active")
 				.siblings().removeClass("active");
 
+			$("#unFollowAll").addClass("hidden");
+			if (action === 'friends') {
+				$("#unFollowAll").removeClass("hidden");
+			}
+
 			if(action === "not-followers") {
 				$(".card").removeClass("hidden");
 				$(".copyForm").addClass("hidden");
@@ -42,6 +47,7 @@ jQuery(document).ready(
 			}
 
 			twitterObj.resetCursor();
+			$("#unFollowAll").removeClass("hidden");
 			twitterObj.actionOnFilter("not-followers");
 		});
 
@@ -130,6 +136,8 @@ jQuery(document).ready(
 				screen_name = screen_name.slice(1, screen_name.length);
 			}
 
+			$("#copyAll").removeClass("hidden");
+
 			var type = (request_type === 'followers') ? 'copy' : 'copy_friends';
 			twitterObj.getCursorScreenName(screen_name, type)
 				.always(function(){
@@ -144,6 +152,8 @@ jQuery(document).ready(
 
 			var $this = $(this),
 				action = $(".active.filter").data('type');
+
+			$("#unFollowAll").removeClass("hidden");
 
 			twitterObj.setNextCount(0);
 			twitterObj.resetAllFriendIds();
@@ -178,5 +188,66 @@ jQuery(document).ready(
 			console.log(settings);
 			console.log(thrownError);
 		});//*/
+
+		$(document).on("click", "#unFollowAll", function(event) {
+			if(event.stopPropagation) {
+				event.stopPropagation();
+			}
+
+			var user_id;
+
+			$("#listContainer").children(".row").each(function(key, value){
+				var $this = $(this);
+
+				user_id = $this.data('id');
+				if(user_id) {
+					twitterObj.friendshipDestroy(user_id)
+						.done(function(response){
+							if(!("errors" in response)) {
+								$this.find(".unfollow")
+									.removeClass("unfollow btn-danger")
+									.addClass("follow btn-success")
+									.text("Follow");
+
+								var position = $this.position();
+								$("html,body").animate({"scrollTop": position.top - 125}, 50);
+							}
+							else {
+								twitterObj.showErrorModal();
+							}
+						});
+				}
+			});
+		});
+
+		$(document).on("click", "#copyAll", function(event){
+			if(event.stopPropagation) {
+				event.stopPropagation();
+			}
+
+			var user_id;
+
+			$("#listContainer").children(".row").each(function(key, value){
+				var $this = $(this);
+				user_id = $this.data('id');
+				if(user_id) {
+					twitterObj.friendshipCreate(user_id)
+						.done(function(response){
+							if(!("errors" in response)) {
+								$this.find(".follow")
+									.removeClass("follow btn-success")
+									.addClass("unfollow btn-danger")
+									.text("Unfollow");
+
+								var position = $this.position();
+								$("html,body").animate({"scrollTop" : position.top - 125}, 50);
+							}
+							else {
+								twitterObj.showErrorModal();
+							}
+						});
+				}
+			});
+		})
 	}
 )

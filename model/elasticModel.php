@@ -52,7 +52,7 @@ Class ElasticModel {
         $params = array(
             "search_type" => "scan",    // use search_type=scan
             "scroll" => "10s",          // how long between scroll requests. should be small!
-            "size" => 20,               // how many results *per shard* you want back
+            "size" => 50,               // how many results *per shard* you want back
             "index" => "twitter",
             "type" => "following",
             "body" => array(
@@ -104,7 +104,7 @@ Class ElasticModel {
         $params = array(
             "search_type" => "scan",    // use search_type=scan
             "scroll" => "10s",          // how long between scroll requests. should be small!
-            "size" => 20,               // how many results *per shard* you want back
+            "size" => 50,               // how many results *per shard* you want back
             "index" => "twitter",
             "type" => "unfollowed",
             "body" => array(

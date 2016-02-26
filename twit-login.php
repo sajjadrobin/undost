@@ -11,7 +11,7 @@ $oauth_token = $_GET['oauth_token'];
 if($oauth_token == '') {
 ?>
 <?php include_once("header.php") ?>
-<?	session_destroy();
+<?php	session_destroy();
 	//$url = $twitterObj->getAuthorizationUrl();
 	$url = $twitterObj->getAuthenticateUrl();
 	//echo "<h2>$url</h2>";
@@ -43,7 +43,7 @@ if($oauth_token == '') {
 <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>
-<?
+<?php
 }
 else
 {

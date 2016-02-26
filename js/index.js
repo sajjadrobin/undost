@@ -129,12 +129,14 @@ var Twitter = function() {
 
         loadFollowerList : function(screen_name) {
             var parent = this,
-                previously_followed = !$("#previous_followed").is(":hidden") && $("#previous_followed").is(":checked");
+                previously_followed = !$("#previous_followed").is(":hidden") && $("#previous_followed").is(":checked"),
+                count = 50;
+
             cursor = cursor || -1,
             screen_name = screen_name || current_user.screen_name;
 
             return $.getJSON(baseURL + 'getFollowerList',
-                {"ajax_tweet_param": {"screen_name": screen_name, "cursor" : cursor}})
+                {"ajax_tweet_param": {"screen_name": screen_name, "cursor" : cursor, "count" : count}})
                 .then(function (response) {
                     if("errors" in response) {
                         errors = response["errors"][0];
@@ -190,8 +192,8 @@ var Twitter = function() {
             var parent = this,
                 friendIds = [];
 
-            friendIds = difference_follower_unfollower.slice(nextCount, nextCount+ 20);
-            nextCount = nextCount + 20;
+            friendIds = difference_follower_unfollower.slice(nextCount, nextCount+ 50);
+            nextCount = nextCount + 50;
             return $.getJSON(baseURL + 'getFriendShipLookUp', {"ajax_tweet_param": {"user_id": friendIds}})
             .then(function (response) {
                 if("errors" in response) {
@@ -414,7 +416,7 @@ var Twitter = function() {
                                             parent.prepareContent(false);
                                         });
                                 }
-                                else if (difference_follower_unfollower.slice(nextCount, nextCount + 20).length && !Object.keys(errors).length) {
+                                else if (difference_follower_unfollower.slice(nextCount, nextCount + 50).length && !Object.keys(errors).length) {
                                     parent.actionOnFilter(action, screen_name);
                                 }
                             });

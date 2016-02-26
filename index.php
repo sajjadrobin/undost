@@ -45,6 +45,7 @@ if(isset($_REQUEST['ajax_tweet_function'])) {
             <a href="#" data-type="friends" class="btn btn-primary filter">Friends</a>
             <a href="#" data-type="not-followers" class="btn btn-primary filter">Not Following</a>
             <a href="#" data-type="copy" class="btn btn-primary filter">Copy</a>
+            <input type="button" id="unFollowAll" value="Unfollow All" class="hidden btn btn-xs btn-danger" />
         </div>
     </div>
     <div class="row hidden copyForm">
@@ -67,6 +68,7 @@ if(isset($_REQUEST['ajax_tweet_function'])) {
             </div>
             <button type="submit" value="Go" name="copy" class="btn btn-default">Submit</button>
         </form>
+        <button type="button"  name="copyAll" id="copyAll" class="btn btn-xs btn-success hidden pull-right">Copy All</button>
     </div>
     <div class="row hidden message">
         <label for="message">Send Direct Message</label>
@@ -94,6 +96,7 @@ if(isset($_REQUEST['ajax_tweet_function'])) {
                         <option value="60">60</option>
                     </select> days
                     <input type="button" id="filterNotFollowing" value="Filter" />
+                    <input type="button" id="unFollowAll" value="Unfollow All" class="hidden btn btn-xs btn-danger" />
                 </p>
             </li>
         </ul>
@@ -137,7 +140,7 @@ if(isset($_REQUEST['ajax_tweet_function'])) {
     </div>
 </script>
 <script id="template-listContainer" type="text/x-handlebars-template">
-<div class="row rowBorder" data-screen-name="{{user.screen_name}}">
+<div class="row rowBorder" data-screen-name="{{user.screen_name}}" data-id="{{user.id_str}}">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <a class="thumbnail pull-left" href="https://twitter.com/{{user.screen_name}}">
             <img class="media-object" src="{{user.profile_image_url}}">
@@ -152,9 +155,9 @@ if(isset($_REQUEST['ajax_tweet_function'])) {
                 <a class="btn btn-xs btn-info" href="https://twitter.com/{{user.screen_name}}" target="_blank">@{{user.screen_name}}</a>
                 <button class="btn btn-success btn-xs hidden message-status">Message Sent</button>
                 {{#if user.following}}
-                    <button class="unfollow btn btn-xs btn-danger pull-right" title="I follow" data-id="{{user.id}}"><i class="glyphicon glyphicon-remove"></i> Unfollow</button>
+                    <button class="unfollow btn btn-xs btn-danger pull-right" title="I follow" data-id="{{user.id_str}}"><i class="glyphicon glyphicon-remove"></i> Unfollow</button>
                 {{else}}
-                    <button class="follow btn btn-xs btn-success pull-right" title="I dont follow" data-id="{{user.id}}"><i class="glyphicon glyphicon-plus"></i> Follow</button>
+                    <button class="follow btn btn-xs btn-success pull-right" title="I dont follow" data-id="{{user.id_str}}"><i class="glyphicon glyphicon-plus"></i> Follow</button>
                 {{/if}}
             </p>
         </div>

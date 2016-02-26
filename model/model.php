@@ -7,6 +7,8 @@ Class Model {
 
 
     function Model() {
+        /*
+
         $host = "127.0.0.1"; //ini_get("mysqli.default_host")
         $user = "root";
         $password = "password";
@@ -15,7 +17,7 @@ Class Model {
         //$link = mysqli_connect($host, $user, $password, $db, $port) or die("Error " . mysqli_connect_error());
 
         //$this->link = $link;
-
+        */
         //elastic search initiate
         $this->elastic = new ElasticModel();
     }
