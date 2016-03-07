@@ -228,25 +228,41 @@ jQuery(document).ready(
 			var user_id;
 
 			$("#listContainer").children(".row").each(function(key, value){
-				var $this = $(this);
+				var $this = $(this),
+					hasError = twitterObj.hasError();
 				user_id = $this.data('id');
-				if(user_id) {
-					twitterObj.friendshipCreate(user_id)
-						.done(function(response){
-							if(!("errors" in response)) {
-								$this.find(".follow")
-									.removeClass("follow btn-success")
-									.addClass("unfollow btn-danger")
-									.text("Unfollow");
 
-								var position = $this.position();
-								$("html,body").animate({"scrollTop" : position.top - 125}, 50);
+				window.setTimeout(function(user_id, $this, hasError){
+					if(user_id && !hasError) {
+						twitterObj.friendshipCreate(user_id)
+							.done(function(response){
+								if(!("errors" in response)) {
+									$this.find(".follow")
+										.removeClass("follow btn-success")
+										.addClass("unfollow btn-danger")
+										.text("Unfollow");
+
+									var position = $this.position();
+									$("html,body").animate({"scrollTop" : position.top - 125}, 50);
+								}
+								else {
+									twitterObj.showErrorModal();
+									hasError = true;
+								}
+							});
+					}
+
+					//continuous next page and copy all followers until any error occurs
+					if(!$("button.follow").length && !twitterObj.hasError()) {
+						$("#nextCursor").click();
+
+						window.setTimeout(function(){
+							if(!twitterObj.hasError()) {
+								$("#copyAll").click();
 							}
-							else {
-								twitterObj.showErrorModal();
-							}
-						});
-				}
+						}, 10000)
+					}
+				}, 2000, user_id, $this, hasError);
 			});
 		})
 	}

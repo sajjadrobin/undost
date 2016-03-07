@@ -472,6 +472,10 @@ var Twitter = function() {
                 $('#myModal').modal({"show":true})
                     .modal('show');
             }
+        },
+
+        hasError : function() {
+            return (Object.keys(errors).length > 0) ? true : false;
         }
     }
 }
