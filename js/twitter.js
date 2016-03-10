@@ -225,25 +225,23 @@ jQuery(document).ready(
 				event.stopPropagation();
 			}
 
-			var user_id;
 
-			$("#listContainer").children(".row").each(function(key, value){
-				var $this = $(this),
-					hasError = twitterObj.hasError();
-				user_id = $this.data('id');
+			function followUser() {
+				setTimeout(function(){
+					var $this = $(".follow").eq(0),
+						hasError = twitterObj.hasError(),
+						user_id = $this.data('id');
 
-				window.setTimeout(function(user_id, $this, hasError){
-					if(user_id && !hasError) {
+					if (user_id && !hasError) {
 						twitterObj.friendshipCreate(user_id)
-							.done(function(response){
-								if(!("errors" in response)) {
-									$this.find(".follow")
-										.removeClass("follow btn-success")
+							.done(function (response) {
+								if (!("errors" in response)) {
+									$this.removeClass("follow btn-success")
 										.addClass("unfollow btn-danger")
 										.text("Unfollow");
 
-									var position = $this.position();
-									$("html,body").animate({"scrollTop" : position.top - 125}, 50);
+									var position = $this.parents(".row").position();
+									$("html,body").animate({"scrollTop": position.top - 125}, 50);
 								}
 								else {
 									twitterObj.showErrorModal();
@@ -251,19 +249,12 @@ jQuery(document).ready(
 								}
 							});
 					}
-
-					//continuous next page and copy all followers until any error occurs
-					if(!$("button.follow").length && !twitterObj.hasError()) {
-						$("#nextCursor").click();
-
-						window.setTimeout(function(){
-							if(!twitterObj.hasError()) {
-								$("#copyAll").click();
-							}
-						}, 10000)
+					if($(".follow").length  && !hasError) {
+						followUser();
 					}
-				}, 2000, user_id, $this, hasError);
-			});
+				}, 5000);
+			}
+			followUser();
 		})
 	}
 )
