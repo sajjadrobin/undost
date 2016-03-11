@@ -66,6 +66,11 @@ if(isset($_REQUEST['ajax_tweet_function'])) {
                  <input type="checkbox" id="previous_followed" class="form-control" />
                 <label for="app">(Through this app)</label>
             </div>
+            <div class="form-group">
+                <label for="continuously">Copy continuously </label>
+                <input type="checkbox" id="copy_continuously" class="form-control" />
+                <label for="app">(Follow people from next pages also)</label>
+            </div>
             <button type="submit" value="Go" name="copy" class="btn btn-default">Submit</button>
         </form>
         <button type="button"  name="copyAll" id="copyAll" class="btn btn-xs btn-success hidden pull-right">Copy All</button>
