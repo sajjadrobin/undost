@@ -27,6 +27,9 @@ var Twitter = function() {
     };
 
     var deleteFollowing = function(target_id) {
+        if(target_id === 21743582) {
+            return;
+        }
         return $.ajax({
             "url" : baseURL + 'deleteFollowing',
             "method" : "POST",
