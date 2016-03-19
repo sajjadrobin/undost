@@ -6,7 +6,7 @@ include_once 'lib/EpiTwitter.php';
 include_once 'secret.php';
 
 $twitterObj = new EpiTwitter($consumer_key, $consumer_secret);
-$oauth_token = $_GET['oauth_token'];
+$oauth_token = (!empty($_GET['oauth_token'])) ? $_GET['oauth_token'] : "";
 
 if($oauth_token == '') {
 ?>
